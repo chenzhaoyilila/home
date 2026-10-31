@@ -1,22 +1,25 @@
-/* Shared by every page: the 中/EN switch, plus small helpers.
-   Text nodes carry data-en / data-zh; the choice is remembered in localStorage('lang'). */
+/* Shared by every page: the EN / 中 / DE switch, plus small helpers.
+   Text nodes carry data-en / data-zh / data-de (a missing translation falls back to English);
+   the choice is remembered in localStorage('lang'). */
 (() => {
+  const LANGS = ['en', 'zh', 'de'];
+  const HTML_LANG = { en: 'en', zh: 'zh-CN', de: 'de' };
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   function detect() {
     try {
       const saved = localStorage.getItem('lang');
-      if (saved === 'zh' || saved === 'en') return saved;
+      if (LANGS.includes(saved)) return saved;
     } catch (e) {}
-    return /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+    const nav = (navigator.language || '').toLowerCase();
+    return nav.startsWith('zh') ? 'zh' : nav.startsWith('de') ? 'de' : 'en';
   }
 
   function apply(lang) {
     window.__lang = lang;
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.documentElement.lang = HTML_LANG[lang];
     document.querySelectorAll('[data-en]').forEach((el) => {
-      const text = el.getAttribute(lang === 'zh' ? 'data-zh' : 'data-en');
-      if (text != null) el.textContent = text;
+      el.textContent = el.getAttribute(`data-${lang}`) ?? el.getAttribute('data-en');
     });
     document.querySelectorAll('input[data-lang]').forEach((input) => { input.checked = input.value === lang; });
     try { localStorage.setItem('lang', lang); } catch (e) {}
@@ -28,7 +31,9 @@
     if (t.matches && t.matches('input[data-lang]') && t.checked) apply(t.value);
   });
 
-  window.siteLang = () => (window.__lang === 'zh' ? 'zh' : 'en');
+  window.siteLang = () => (LANGS.includes(window.__lang) ? window.__lang : 'en');
+  // Strings in code come as [en, zh, de]; a missing one falls back to English.
+  window.sitePick = (strings) => strings[LANGS.indexOf(window.siteLang())] ?? strings[0];
   window.siteEscape = (s) => String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
@@ -36,7 +41,10 @@
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
     if (!m) return iso || '';
     const [y, mo, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
-    return window.siteLang() === 'zh' ? `${y}年${mo}月${d}日` : `${String(d).padStart(2, '0')} ${MONTHS[mo - 1]} ${y}`;
+    const lang = window.siteLang();
+    if (lang === 'zh') return `${y}年${mo}月${d}日`;
+    if (lang === 'de') return `${m[3]}.${m[2]}.${y}`;
+    return `${String(d).padStart(2, '0')} ${MONTHS[mo - 1]} ${y}`;
   };
 
   // Optional images (your portrait, video thumbnail): if the file isn't there yet, the frame keeps its placeholder mark.

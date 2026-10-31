@@ -22,9 +22,10 @@
   const ORDER = { home: 0, about: 1, teaching: 2, notes: 3 };
   const NUM = { about: '01', teaching: '02', notes: '03' };
   const ALIASES = { thoughts: 'notes', newsletter: 'notes', projects: 'teaching' };
+  const LANGS = [['en', 'EN'], ['zh', '中'], ['de', 'DE']];
   const LABELS = {
-    contents: ['Contents', '目录'], about: ['About', '关于'], teaching: ['Teaching', '教学'],
-    notes: ['Notes', '随笔'], cv: ['CV', '简历'],
+    contents: ['Contents', '目录', 'Inhalt'], about: ['About', '关于', 'Über mich'], teaching: ['Teaching', '教学', 'Lehre'],
+    notes: ['Notes', '随笔', 'Notizen'], cv: ['CV', '简历', 'Lebenslauf'],
   };
   const BACK = '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
 
@@ -45,10 +46,11 @@
   // site.js is not loaded yet when a page first arrives, so mirror its rule.
   function lang() {
     if (window.siteLang) return window.siteLang();
-    try { const s = localStorage.getItem('lang'); if (s === 'zh' || s === 'en') return s; } catch (e) {}
-    return /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+    try { const s = localStorage.getItem('lang'); if (LANGS.some(([v]) => v === s)) return s; } catch (e) {}
+    const nav = (navigator.language || '').toLowerCase();
+    return nav.startsWith('zh') ? 'zh' : nav.startsWith('de') ? 'de' : 'en';
   }
-  const label = (k) => LABELS[k][lang() === 'zh' ? 1 : 0];
+  const label = (k) => LABELS[k][Math.max(0, LANGS.findIndex(([v]) => v === lang()))];
 
   /* ---------- the motion ---------- */
 
@@ -165,10 +167,10 @@
     op.className = 'turn-opener';
     op.setAttribute('aria-hidden', 'true');
     op.style.setProperty('--turn-elapsed', String(Math.max(0, Date.now() - at)));
-    const zh = lang() === 'zh';
+    const on = lang();
     const bar = d.back
       ? `<div class="topbar"><span class="btn btn-ghost back">${BACK}<span>${esc(d.back)}</span></span>`
-        + `<span class="seg lang"><span class="seg-opt${zh ? ' is-on' : ''}">中</span><span class="seg-opt${zh ? '' : ' is-on'}">EN</span></span></div>`
+        + `<span class="seg lang">${LANGS.map(([v, t]) => `<span class="seg-opt${v === on ? ' is-on' : ''}">${t}</span>`).join('')}</span></div>`
       : '';
     const head = d.kind === 'article'
       ? `<div class="article"><span class="kicker">${esc(d.kicker)}</span><h1 class="article-title">${esc(d.title)}</h1><span class="turn-wait"></span></div>`

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-en="Notes · Zhaoyi Chen" data-zh="随笔 · Zhaoyi Chen">Notes · Zhaoyi Chen</title>
+  <title data-en="Notes · Zhaoyi Chen" data-zh="随笔 · Zhaoyi Chen" data-de="Notizen · Zhaoyi Chen">Notes · Zhaoyi Chen</title>
   <link rel="stylesheet" href="assets/industry.css">
   <link rel="stylesheet" href="assets/site.css">
 </head>
@@ -15,14 +15,15 @@
     <div class="topbar">
       <a class="btn btn-ghost back" href="index.html#notes">
         <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-        <span data-en="Notes" data-zh="随笔">Notes</span>
+        <span data-en="Notes" data-zh="随笔" data-de="Notizen">Notes</span>
       </a>
-      <div class="seg lang" role="radiogroup" aria-label="Language / 语言">
-        <label class="seg-opt"><input type="radio" name="lang-top" value="zh" data-lang>中</label>
+      <div class="seg lang" role="radiogroup" aria-label="Language / 语言 / Sprache">
         <label class="seg-opt"><input type="radio" name="lang-top" value="en" data-lang>EN</label>
+        <label class="seg-opt"><input type="radio" name="lang-top" value="zh" data-lang>中</label>
+        <label class="seg-opt"><input type="radio" name="lang-top" value="de" data-lang>DE</label>
       </div>
     </div>
-    <article class="article" id="article"><p class="status" data-en="Loading…" data-zh="正在加载…">Loading…</p></article>
+    <article class="article" id="article"><p class="status" data-en="Loading…" data-zh="正在加载…" data-de="Wird geladen…">Loading…</p></article>
   </div>
 </div>
 
@@ -32,9 +33,11 @@
 (() => {
   // The post body (bodyHtml in content/posts.json) is shown exactly as written; only the page chrome translates.
   const MSG = {
-    none: ['No post selected.', '未选择文章。'],
-    missing: ['This note was not found. Check the slug in content/posts.json.', '未找到该文章。请检查 content/posts.json 中的 slug。'],
-    error: ['Could not load the notes. If you opened this file directly, preview it with a local server (e.g. Live Server).', '无法加载随笔。如果你是直接打开的本文件，请改用本地服务器（如 Live Server）预览。'],
+    none: ['No post selected.', '未选择文章。', 'Keine Notiz ausgewählt.'],
+    missing: ['This note was not found. Check the slug in content/posts.json.', '未找到该文章。请检查 content/posts.json 中的 slug。',
+      'Diese Notiz wurde nicht gefunden. Prüfe den Slug in content/posts.json.'],
+    error: ['Could not load the notes. If you opened this file directly, preview it with a local server (e.g. Live Server).', '无法加载随笔。如果你是直接打开的本文件，请改用本地服务器（如 Live Server）预览。',
+      'Die Notizen konnten nicht geladen werden. Wenn du diese Datei direkt geöffnet hast, nutze für die Vorschau einen lokalen Server (z. B. Live Server).'],
   };
   const el = document.getElementById('article');
   const params = new URLSearchParams(location.search);
@@ -54,10 +57,9 @@
   if (window.turn) window.turn.hold(new Promise((r) => { rendered = r; }));
 
   function render() {
-    const zh = siteLang() === 'zh';
     if (state === 'loading') return;
     if (rendered) rendered();
-    if (state !== 'loaded') { el.innerHTML = `<p class="status">${MSG[state][zh ? 1 : 0]}</p>`; return; }
+    if (state !== 'loaded') { el.innerHTML = `<p class="status">${sitePick(MSG[state])}</p>`; return; }
     document.title = `${post.title} · Zhaoyi Chen`;
     const tags = (post.tags || []).map((t) => `<span class="tag tag-accent">${siteEscape(t)}</span>`).join('');
     el.innerHTML = `

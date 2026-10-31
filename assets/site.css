@@ -35,7 +35,7 @@ a:hover { color: var(--color-accent-800); }
 .page { flex: 1; min-width: 0; min-height: 100vh; background: var(--color-bg); display: flex; flex-direction: column; }
 .page > section { flex: 1; display: flex; flex-direction: column; }
 
-/* Logo mark: the two crossed ellipses, drawn as lines */
+/* Placeholder mark in empty image frames: two crossed ellipses, drawn as lines */
 .mark { position: relative; width: 28px; height: 28px; flex: none; display: inline-block; }
 .mark::before, .mark::after {
   content: ""; position: absolute; left: 4px; top: 9px; width: 20px; height: 10px;
@@ -47,7 +47,7 @@ a:hover { color: var(--color-accent-800); }
 .home { flex: 1; min-width: 0; min-height: 100vh; display: grid; grid-template-columns: minmax(300px, 352px) minmax(0, 1fr); gap: 1px; }
 .home > * { min-width: 0; background: var(--color-bg); }
 .aside { padding: 40px clamp(20px, 4vw, 40px); display: flex; flex-direction: column; }
-.bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 28px; }
+.bar { display: flex; justify-content: flex-end; align-items: center; gap: 16px; min-height: 28px; }
 .frame-wrap { margin-top: 40px; }
 .frame { width: 100%; aspect-ratio: 4 / 5; display: flex; flex-direction: column; }
 .pane { display: none; flex: 1; min-height: 0; flex-direction: column; }
@@ -100,7 +100,7 @@ a:hover { color: var(--color-accent-800); }
   .row-leader, .row-meta.end { display: block; }
   .row-main .row-meta { display: none; }
 }
-.contact { margin-top: auto; padding-top: 40px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 32px; }
+.contact { padding-top: 56px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 32px; }
 .contact p { font-size: 15px; line-height: 24px; margin: 12px 0 0; color: var(--muted); }
 .btn-cta { padding: 12px 20px; font-size: 16px; color: var(--color-bg); text-decoration: none; }
 .btn-cta:hover { color: var(--color-bg); }
