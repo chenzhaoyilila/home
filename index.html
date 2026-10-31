@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<script src="assets/turn.js"></script>
 <div class="shell">
   <a class="spine" href="#" aria-label="Zhaoyi Chen — contents"><span>Zhaoyi Chen</span></a>
 
@@ -263,16 +264,32 @@
     caption.textContent = key ? `${zh() ? '预览' : 'Preview'} · ${LABELS[key][0]} ${LABELS[key][zh() ? 2 : 1]}` : '';
   }
 
+  // Deeper into the book (contents → about → teaching → notes) turns the page
+  // away; going back folds the destination in. See assets/turn.js.
+  const ORDER = { home: 0, about: 1, teaching: 2, notes: 3 };
+  let booted = false;
   function route() {
     let key = decodeURIComponent(location.hash.slice(1));
     key = ALIASES[key] || key;
-    view = TITLES[key] ? key : 'home';
-    home.hidden = view !== 'home';
-    pages.hidden = view === 'home';
-    sections.forEach((s) => { s.hidden = s.getAttribute('data-view') !== view; });
-    setTitle();
-    setPreview('');
-    window.scrollTo(0, 0);
+    const next = TITLES[key] ? key : 'home';
+    const prev = view;
+    const apply = () => {
+      view = next;
+      home.hidden = view !== 'home';
+      pages.hidden = view === 'home';
+      sections.forEach((s) => { s.hidden = s.getAttribute('data-view') !== view; });
+      setTitle();
+      setPreview('');
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    };
+    if (!booted || next === prev || !window.turn) { booted = true; apply(); return; }
+    window.turn.swap({
+      from: prev === 'home' ? home : pages,
+      to: next === 'home' ? home : pages,
+      apply,
+      forward: ORDER[next] > ORDER[prev],
+      ready: next === 'notes' ? postsSettled : null,
+    });
   }
 
   // Hover or keyboard focus on a section previews it in the frame.
@@ -307,7 +324,7 @@
     const shown = filter === 'all' ? posts : posts.filter((p) => tagsOf(p).map((t) => t.toLowerCase()).includes('newsletter'));
     list.innerHTML = shown.length
       ? shown.map((p) => `
-        <a class="post" href="thought.html?slug=${encodeURIComponent(p.slug)}${PREVIEW_QS}">
+        <a class="post" href="thought.html?slug=${encodeURIComponent(p.slug)}${PREVIEW_QS}" data-turn-kicker="${siteEscape(siteFormatDate(p.date))}" data-turn-title="${siteEscape(p.title || 'Untitled')}">
           <span class="post-date">${siteEscape(siteFormatDate(p.date))}</span>
           <span class="post-main"><span class="post-title">${badge(p)}${siteEscape(p.title || 'Untitled')}</span><span class="post-excerpt">${siteEscape(p.excerpt || '')}</span></span>
           <span class="post-tags">${tagHtml(p)}</span>
@@ -322,7 +339,7 @@
   }
 
   // no-cache: revalidate on every load, so a rebuilt posts.json shows up at once
-  fetch(POSTS_URL, { cache: 'no-cache' })
+  const postsSettled = fetch(POSTS_URL, { cache: 'no-cache' })
     .then((r) => { if (!r.ok) throw new Error('fetch failed'); return r.json(); })
     .then((data) => {
       posts = (data.posts || []).filter((p) => p.slug).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
@@ -339,6 +356,7 @@
   document.addEventListener('langchange', () => { setTitle(); setPreview(pv); renderPosts(); });
   window.addEventListener('hashchange', route);
   route();
+  if (view === 'notes' && window.turn) window.turn.hold(postsSettled);
 })();
 </script>
 </body>

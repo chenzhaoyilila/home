@@ -205,3 +205,56 @@ div.next p { font-size: 15px; line-height: 24px; margin: 12px 0 0; color: var(--
 
 /* CV page before resume.pdf has been added */
 .pdf-missing { padding: 0 var(--pad) 40px; }
+
+/* ---- Page turn (assets/turn.js): pages turn on the name spine ---- */
+.spine { z-index: 40; }
+.turn-snap, .turn-opener, .turn-cast, .turn-shade, .turn-sheen { pointer-events: none; }
+/* the link that was clicked stays marked on the turning page */
+.turn-trigger { background: color-mix(in srgb, var(--color-accent) 10%, transparent) !important; }
+/* the page darkens toward its free edge as it turns from the light */
+.turn-shade, .turn-sheen { position: absolute; inset: 0; opacity: 0; z-index: 1; }
+.turn-shade { background: linear-gradient(to left, rgba(29, 31, 32, .38), rgba(29, 31, 32, .1) 55%, rgba(29, 31, 32, 0)); }
+.turn-sheen {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, .55), rgba(255, 255, 255, 0)) no-repeat;
+  background-size: 38% 100%;
+}
+/* the shadow the lifted page casts into the gutter beside the spine */
+.turn-cast {
+  position: fixed; top: 0; bottom: 0; left: calc(clamp(56px, min(10vw, 16vh), 132px) + 1px);
+  width: min(55vw, 620px); z-index: 25; opacity: 0;
+  background: linear-gradient(to right, rgba(29, 31, 32, .32), rgba(29, 31, 32, .12) 22%, rgba(29, 31, 32, 0) 70%);
+}
+/* the destination's title page, shown while it loads */
+.turn-opener {
+  position: fixed; top: 0; right: 0; bottom: 0; left: calc(clamp(56px, min(10vw, 16vh), 132px) + 1px);
+  z-index: 20; overflow: hidden; display: flex; flex-direction: column;
+  background: var(--color-bg); color: var(--color-text); font-family: var(--font-body);
+}
+.turn-opener .seg-opt.is-on { background: var(--color-accent); color: var(--color-bg); }
+.turn-opener.is-leaf { z-index: 30; transform-origin: 0 50%; }
+.turn-opener.is-arrival {
+  z-index: 35; transition: opacity .32s ease-out;
+  animation: turn-failsafe 0s linear 9s forwards; /* never leave a page covered */
+}
+.turn-opener.is-leaving { opacity: 0; }
+/* a hairline that draws itself slowly, only noticeable when loading takes a while */
+.turn-wait {
+  display: block; height: 1px; max-width: 420px; margin-top: 28px;
+  background: var(--color-accent); transform-origin: left center; transform: scaleX(0); opacity: 0;
+  animation: turn-wait 9s cubic-bezier(.16, .72, .24, 1) forwards;
+  animation-delay: calc(var(--turn-elapsed, 0) * -1ms);
+}
+@keyframes turn-wait {
+  0% { transform: scaleX(0); opacity: 0; }
+  6% { opacity: 0; }
+  14% { opacity: .9; }
+  100% { transform: scaleX(1); opacity: .9; }
+}
+@keyframes turn-failsafe { to { visibility: hidden; } }
+/* the new page settles into place as the title page dissolves */
+html.turn-settle .shell > :not(.spine) { animation: turn-settle .5s cubic-bezier(.2, .7, .2, 1); }
+@keyframes turn-settle { from { transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) {
+  .turn-wait { animation: none; }
+  html.turn-settle .shell > :not(.spine) { animation: none; }
+}

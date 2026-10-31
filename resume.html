@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<script src="assets/turn.js"></script>
 <div class="shell">
   <a class="spine" href="index.html" aria-label="Zhaoyi Chen — contents"><span>Zhaoyi Chen</span></a>
   <div class="page">
@@ -40,7 +41,7 @@
 <script>
   // Embed the PDF only once it has been added; otherwise say so, rather than
   // showing GitHub's "not found" page inside the frame.
-  fetch('resume.pdf', { method: 'HEAD', cache: 'no-cache' })
+  const checked = fetch('resume.pdf', { method: 'HEAD', cache: 'no-cache' })
     .then((r) => {
       if (!r.ok) throw new Error(r.status);
       document.querySelector('#pdf-frame iframe').src = 'resume.pdf';
@@ -50,6 +51,7 @@
       document.getElementById('pdf-frame').hidden = true;
       document.getElementById('pdf-missing').hidden = false;
     });
+  if (window.turn) window.turn.hold(checked);
 </script>
 <script src="assets/interactions.js" defer></script>
 </body>

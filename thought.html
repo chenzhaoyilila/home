@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<script src="assets/turn.js"></script>
 <div class="shell">
   <a class="spine" href="index.html" aria-label="Zhaoyi Chen — contents"><span>Zhaoyi Chen</span></a>
   <div class="page">
@@ -49,10 +50,13 @@
   }
   let post = null;
   let state = slug ? 'loading' : 'none';
+  let rendered;
+  if (window.turn) window.turn.hold(new Promise((r) => { rendered = r; }));
 
   function render() {
     const zh = siteLang() === 'zh';
     if (state === 'loading') return;
+    if (rendered) rendered();
     if (state !== 'loaded') { el.innerHTML = `<p class="status">${MSG[state][zh ? 1 : 0]}</p>`; return; }
     document.title = `${post.title} · Zhaoyi Chen`;
     const tags = (post.tags || []).map((t) => `<span class="tag tag-accent">${siteEscape(t)}</span>`).join('');
