@@ -1,0 +1,25 @@
+# ---- Never publish: copyrighted / private source material ----
+markdown_output/
+Instructions_Gemini/
+*.pdf
+!resume.pdf
+
+# ---- Python tooling (not part of the website) ----
+.venv/
+__pycache__/
+*.pyc
+Gemini.py
+pdf_to_markdown.py
+
+# ---- macOS / editor / local dev ----
+.DS_Store
+.vscode/
+.claude/
+
+# ---- Draft preview data: contains unpublished drafts, must never deploy ----
+content/posts.preview.json
+content/posts/*.draft.md
+
+
+# ---- Personal scripts, not part of the website ----
+AudioEx.py

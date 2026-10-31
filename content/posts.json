@@ -1,0 +1,27 @@
+{
+  "posts": [
+    {
+      "slug": "welcome",
+      "title": "Welcome to my notes",
+      "date": "2026-04-04",
+      "excerpt": "这里是我记录想法的地方。",
+      "tags": [
+        "meta",
+        "writing"
+      ],
+      "coverImage": null,
+      "bodyHtml": "<p>这里是我记录想法的地方。</p><p>写一篇新的，就是在 <code>content/posts/</code> 里新建一个 <code>.md</code> 文件，正常写字就行 —— 不用碰 JSON，不用转义引号。</p><p><strong>空行</strong>代表新的一段。<br>单个回车就是换行，中文之间不会多出空格。</p><p>写完之后跑一次生成命令，网站的数据就更新了：</p><pre><code>python3 build_posts.py</code></pre><p>想插图的话，把图片放进 <code>content/images/</code>，然后这样引用：</p><p><img src=\"content/images/your-photo.jpg\" alt=\"说明文字\" loading=\"lazy\"></p><p>还能用 <strong>粗体</strong>、<em>斜体</em>、<code>行内代码</code> 和<a href=\"https://github.com\">链接</a>。</p>"
+    },
+    {
+      "slug": "newsletter-april",
+      "title": "Newsletter idea: what I shipped this month",
+      "date": "2026-04-01",
+      "excerpt": "A template for a monthly update—swap this copy with your own.",
+      "tags": [
+        "newsletter"
+      ],
+      "coverImage": null,
+      "bodyHtml": "<p><strong>Intro</strong> — one line on what this issue is about.</p><p><strong>Highlights</strong></p><ul><li>Thing you built or learned</li><li>Link or resource you liked</li><li>What you are trying next</li></ul><p><strong>Sign-off</strong> — optional CTA or thank you.</p>"
+    }
+  ]
+}

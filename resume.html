@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-en="CV · Zhaoyi Chen" data-zh="简历 · Zhaoyi Chen">CV · Zhaoyi Chen</title>
+  <link rel="stylesheet" href="assets/industry.css">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="shell">
+  <a class="spine" href="index.html" aria-label="Zhaoyi Chen — contents"><span>Zhaoyi Chen</span></a>
+  <div class="page">
+    <div class="topbar">
+      <a class="btn btn-ghost back" href="index.html#about">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        <span data-en="About" data-zh="关于">About</span>
+      </a>
+      <div class="seg lang" role="radiogroup" aria-label="Language / 语言">
+        <label class="seg-opt"><input type="radio" name="lang-top" value="zh" data-lang>中</label>
+        <label class="seg-opt"><input type="radio" name="lang-top" value="en" data-lang>EN</label>
+      </div>
+    </div>
+    <header class="sec-head">
+      <span class="kicker">PDF</span>
+      <h1 class="sec-title" data-en="CV" data-zh="简历">CV</h1>
+    </header>
+    <!-- The PDF must sit next to this file and be named exactly resume.pdf -->
+    <div class="pdf-bar" id="pdf-bar">
+      <a class="inline-link" href="resume.pdf" target="_blank" rel="noopener"><span data-en="Open in new tab" data-zh="在新标签页打开">Open in new tab</span><svg class="icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+    </div>
+    <div class="pdf blueprint" id="pdf-frame">
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      <iframe title="CV (PDF)"></iframe>
+    </div>
+    <p class="status pdf-missing" id="pdf-missing" hidden data-en="The CV isn't online yet. Please check back soon." data-zh="简历暂未上传，请稍后再来查看。">The CV isn't online yet. Please check back soon.</p>
+  </div>
+</div>
+<script src="assets/site.js"></script>
+<script>
+  // Embed the PDF only once it has been added; otherwise say so, rather than
+  // showing GitHub's "not found" page inside the frame.
+  fetch('resume.pdf', { method: 'HEAD', cache: 'no-cache' })
+    .then((r) => {
+      if (!r.ok) throw new Error(r.status);
+      document.querySelector('#pdf-frame iframe').src = 'resume.pdf';
+    })
+    .catch(() => {
+      document.getElementById('pdf-bar').hidden = true;
+      document.getElementById('pdf-frame').hidden = true;
+      document.getElementById('pdf-missing').hidden = false;
+    });
+</script>
+<script src="assets/interactions.js" defer></script>
+</body>
+</html>
