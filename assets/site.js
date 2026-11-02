@@ -47,6 +47,12 @@
     return `${String(d).padStart(2, '0')} ${MONTHS[mo - 1]} ${y}`;
   };
 
+  // In the owner's browser (connected on write.html), the [data-owner] links show: New note, Edit.
+  // They only lead to the writing desk; saving there still needs the owner's GitHub key.
+  let owner = false;
+  try { owner = !!(localStorage.getItem('desk.key') || sessionStorage.getItem('desk.key')); } catch (e) {}
+  document.querySelectorAll('[data-owner]').forEach((el) => { el.hidden = !owner; });
+
   // Optional images (your portrait, video thumbnail): if the file isn't there yet, the frame keeps its placeholder mark.
   document.querySelectorAll('img[data-src]').forEach((img) => {
     img.addEventListener('error', () => img.remove(), { once: true });

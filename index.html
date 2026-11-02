@@ -200,9 +200,16 @@
       <div class="sec-body single">
         <div class="notes-bar">
           <span class="label" data-en="Blog &amp; newsletter" data-zh="博客与通讯" data-de="Blog &amp; Newsletter">Blog &amp; newsletter</span>
-          <div class="seg" role="radiogroup" aria-label="Filter notes">
-            <label class="seg-opt"><input type="radio" name="notes-filter" value="all" checked><span data-en="All" data-zh="全部" data-de="Alle">All</span></label>
-            <label class="seg-opt"><input type="radio" name="notes-filter" value="newsletter"><span data-en="Newsletter" data-zh="通讯" data-de="Newsletter">Newsletter</span></label>
+          <div class="notes-tools">
+            <!-- Shown only in your own browser, once it is connected on write.html -->
+            <a class="btn btn-secondary owner-btn" href="write.html?new=1" data-owner hidden>
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              <span data-en="New note" data-zh="新随笔" data-de="Neue Notiz">New note</span>
+            </a>
+            <div class="seg" role="radiogroup" aria-label="Filter notes">
+              <label class="seg-opt"><input type="radio" name="notes-filter" value="all" checked><span data-en="All" data-zh="全部" data-de="Alle">All</span></label>
+              <label class="seg-opt"><input type="radio" name="notes-filter" value="newsletter"><span data-en="Newsletter" data-zh="通讯" data-de="Newsletter">Newsletter</span></label>
+            </div>
           </div>
         </div>
         <div id="notes-list"><p class="status" data-en="Loading notes…" data-zh="正在加载…" data-de="Notizen werden geladen…">Loading notes…</p></div>

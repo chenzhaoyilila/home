@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <!-- This page holds the owner's GitHub key, so it runs only its own scripts and talks only to GitHub. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title data-en="Writing desk · Zhaoyi Chen" data-zh="写作台 · Zhaoyi Chen" data-de="Schreibtisch · Zhaoyi Chen">Writing desk · Zhaoyi Chen</title>
+  <link rel="stylesheet" href="assets/industry.css">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="stylesheet" href="assets/write.css">
+</head>
+<body>
+<div class="shell">
+  <a class="spine" href="index.html" aria-label="Zhaoyi Chen — contents"><span>Zhaoyi Chen</span></a>
+  <div class="page">
+    <div class="topbar">
+      <a class="btn btn-ghost back" href="index.html#notes">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        <span data-en="Notes" data-zh="随笔" data-de="Notizen">Notes</span>
+      </a>
+      <div class="topbar-tools">
+        <span class="who" id="who" hidden></span>
+        <button class="btn btn-ghost" type="button" id="sign-out" hidden><span data-en="Sign out" data-zh="退出" data-de="Abmelden">Sign out</span></button>
+        <div class="seg lang" role="radiogroup" aria-label="Language / 语言 / Sprache">
+          <label class="seg-opt"><input type="radio" name="lang-top" value="en" data-lang>EN</label>
+          <label class="seg-opt"><input type="radio" name="lang-top" value="zh" data-lang>中</label>
+          <label class="seg-opt"><input type="radio" name="lang-top" value="de" data-lang>DE</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. Connect: shown until this browser holds a GitHub key from the owner's account -->
+    <section id="connect" hidden>
+      <header class="sec-head">
+        <span class="kicker" data-en="Writing desk" data-zh="写作台" data-de="Schreibtisch">Writing desk</span>
+        <h1 class="sec-title" data-en="Write" data-zh="写作" data-de="Schreiben">Write</h1>
+      </header>
+      <div class="connect-body">
+        <div>
+          <p class="lead" data-en="Only you can publish from here." data-zh="只有你能在这里发布。" data-de="Nur du kannst hier veröffentlichen.">Only you can publish from here.</p>
+          <p class="prose" data-en="Notes you write here are saved straight to your GitHub repository and appear on the site about a minute later. GitHub only accepts a save that comes with a key from your account, so anyone else who opens this page can look, but can't change anything." data-zh="你在这里写的随笔会直接保存进你的 GitHub 仓库，大约一分钟后出现在网站上。GitHub 只接受带有你账号密钥的保存，所以别人即使打开这个页面，也只能看，改不了任何东西。" data-de="Was du hier schreibst, landet direkt in deinem GitHub-Repository und erscheint etwa eine Minute später auf der Website. GitHub nimmt nur Änderungen an, die einen Schlüssel aus deinem Konto mitbringen – wer diese Seite sonst öffnet, kann schauen, aber nichts verändern.">Notes you write here are saved straight to your GitHub repository and appear on the site about a minute later. GitHub only accepts a save that comes with a key from your account, so anyone else who opens this page can look, but can't change anything.</p>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num">01</span>
+            <div class="step-main">
+              <span class="step-title" data-en="Create a key on GitHub" data-zh="在 GitHub 上创建密钥" data-de="Erstelle auf GitHub einen Schlüssel">Create a key on GitHub</span>
+              <p class="step-text" data-en="The link opens GitHub's form with the name and permission filled in. Under Repository access, choose Only select repositories → home. Check that Contents says Read and write, then click Generate token and copy the key." data-zh="这个链接会打开 GitHub 的表单，名称和权限都已填好。在 Repository access 中选择 Only select repositories → home，确认 Contents 为 Read and write，然后点 Generate token 并复制密钥。" data-de="Der Link öffnet das GitHub-Formular mit vorausgefülltem Namen und vorausgefüllter Berechtigung. Wähle unter Repository access „Only select repositories“ → home, prüfe, dass bei Contents „Read and write“ steht, klicke dann auf Generate token und kopiere den Schlüssel.">The link opens GitHub's form with the name and permission filled in. Under Repository access, choose Only select repositories → home. Check that Contents says Read and write, then click Generate token and copy the key.</p>
+              <a class="btn btn-secondary step-btn" href="https://github.com/settings/personal-access-tokens/new?name=Writing%20desk%20(home)&amp;description=Lets%20write.html%20on%20chenzhaoyilila.github.io%2Fhome%20save%20notes%20to%20the%20home%20repository.&amp;target_name=chenzhaoyilila&amp;expires_in=90&amp;contents=write" target="_blank" rel="noopener noreferrer">
+                <span data-en="Open GitHub" data-zh="打开 GitHub" data-de="GitHub öffnen">Open GitHub</span>
+                <svg class="icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+              </a>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num">02</span>
+            <form class="step-main" id="connect-form" novalidate>
+              <label class="step-title" for="key-input" data-en="Paste it here" data-zh="粘贴到这里" data-de="Hier einfügen">Paste it here</label>
+              <div class="key-row">
+                <input class="input" id="key-input" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" aria-describedby="key-fine">
+                <button class="btn btn-primary" type="submit" id="connect-btn"><span data-en="Connect" data-zh="连接" data-de="Verbinden">Connect</span></button>
+              </div>
+              <label class="check"><input type="checkbox" id="remember" checked><span data-en="Remember on this device" data-zh="在这台设备上记住" data-de="Auf diesem Gerät merken">Remember on this device</span></label>
+              <p class="notice is-error" id="connect-msg" role="alert"></p>
+            </form>
+          </li>
+        </ol>
+        <p class="fine" id="key-fine" data-en="The key stays in this browser and is only ever sent to GitHub. Never put it in a file, a message or a chat. You can revoke it at any time on GitHub (Settings → Developer settings → Personal access tokens)." data-zh="密钥只保存在这个浏览器里，也只会发送给 GitHub。不要把它放进文件、消息或聊天里。你可以随时在 GitHub 上撤销它（Settings → Developer settings → Personal access tokens）。" data-de="Der Schlüssel bleibt in diesem Browser und wird nur an GitHub geschickt. Leg ihn nie in einer Datei, Nachricht oder einem Chat ab. Du kannst ihn jederzeit auf GitHub widerrufen (Settings → Developer settings → Personal access tokens).">The key stays in this browser and is only ever sent to GitHub. Never put it in a file, a message or a chat. You can revoke it at any time on GitHub (Settings → Developer settings → Personal access tokens).</p>
+      </div>
+    </section>
+
+    <!-- 2. The desk: your notes on the left, the open note on the right -->
+    <div class="desk" id="desk" hidden>
+      <nav class="desk-list" aria-labelledby="list-label">
+        <div class="list-head">
+          <span class="label" id="list-label" data-en="Your notes" data-zh="你的随笔" data-de="Deine Notizen">Your notes</span>
+          <button class="btn btn-ghost btn-icon" type="button" id="reload" data-tip="reload">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+          </button>
+        </div>
+        <button class="btn btn-primary new-note" type="button" id="new-note">
+          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          <span data-en="New note" data-zh="新随笔" data-de="Neue Notiz">New note</span>
+        </button>
+        <div class="note-list" id="note-list"></div>
+      </nav>
+
+      <div class="editor" id="editor">
+        <div class="editor-head">
+          <span class="state" id="state"></span>
+          <p class="notice" id="notice" role="status" aria-live="polite"></p>
+          <a class="inline-link" id="view-live" target="_blank" rel="noopener" hidden>
+            <span data-en="View on site" data-zh="在网站上查看" data-de="Auf der Website ansehen">View on site</span>
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+        </div>
+        <p class="local-note" id="local-note" hidden data-en="This is a local copy of the desk, but saving still goes to GitHub and the live site. Afterwards, run git pull to bring the change to this computer." data-zh="这是写作台的本地副本，但保存仍会写入 GitHub 和线上网站。保存后，运行 git pull 把改动同步到这台电脑。" data-de="Das ist eine lokale Kopie des Schreibtischs, gespeichert wird aber trotzdem auf GitHub und der Live-Website. Hol die Änderung danach mit git pull auf diesen Computer.">This is a local copy of the desk, but saving still goes to GitHub and the live site. Afterwards, run git pull to bring the change to this computer.</p>
+
+        <input class="input title-input" id="f-title" autocomplete="off" data-ph="title">
+        <div class="meta-row">
+          <div class="field">
+            <label for="f-date" data-en="Date" data-zh="日期" data-de="Datum">Date</label>
+            <input class="input" id="f-date" type="date">
+          </div>
+          <div class="field">
+            <label for="f-tags" data-en="Tags, separated by commas" data-zh="标签，用逗号分隔" data-de="Tags, durch Kommas getrennt">Tags, separated by commas</label>
+            <input class="input" id="f-tags" autocomplete="off" data-ph="tags">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-excerpt" data-en="Summary in the list (optional)" data-zh="列表中的摘要（可选）" data-de="Zusammenfassung in der Liste (optional)">Summary in the list (optional)</label>
+          <input class="input" id="f-excerpt" autocomplete="off">
+        </div>
+        <div class="field" id="slug-field">
+          <label for="f-slug" data-en="Link" data-zh="链接" data-de="Link">Link</label>
+          <div class="slug-row"><span class="slug-prefix" aria-hidden="true">thought.html?slug=</span><input class="input" id="f-slug" autocomplete="off" spellcheck="false"></div>
+        </div>
+
+        <div class="compose">
+          <div class="toolbar" role="toolbar" id="toolbar" data-tip="format">
+            <button type="button" class="tool" data-tool="bold"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h6a3.5 3.5 0 0 1 0 7H7z"/><path d="M7 12h7a3.5 3.5 0 0 1 0 7H7z"/></svg></button>
+            <button type="button" class="tool" data-tool="italic"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5h8"/><path d="M6 19h8"/><path d="m14 5-4 14"/></svg></button>
+            <button type="button" class="tool" data-tool="heading"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14"/><path d="M16 5v14"/><path d="M6 12h10"/></svg></button>
+            <span class="tool-sep" aria-hidden="true"></span>
+            <button type="button" class="tool" data-tool="quote"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14"/><path d="M10 8h9"/><path d="M10 12h9"/><path d="M10 16h6"/></svg></button>
+            <button type="button" class="tool" data-tool="list"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="M4.5 6h.01"/><path d="M4.5 12h.01"/><path d="M4.5 18h.01"/></svg></button>
+            <button type="button" class="tool" data-tool="numbered"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6h10"/><path d="M10 12h10"/><path d="M10 18h10"/><path d="M4 5l1.5-1v5"/><path d="M4 15h2.5L4 19h3"/></svg></button>
+            <button type="button" class="tool" data-tool="code"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/></svg></button>
+            <span class="tool-sep" aria-hidden="true"></span>
+            <button type="button" class="tool" data-tool="link"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg></button>
+            <button type="button" class="tool" data-tool="image"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16"/><path d="m3 16 5-5 4 4 3-3 6 6"/><path d="M15.5 8.5h.01"/></svg></button>
+            <span class="toolbar-gap"></span>
+            <div class="seg view-seg" role="radiogroup" data-tip="view">
+              <label class="seg-opt"><input type="radio" name="view" value="write"><span data-en="Write" data-zh="编辑" data-de="Schreiben">Write</span></label>
+              <label class="seg-opt view-both"><input type="radio" name="view" value="split"><span data-en="Both" data-zh="并排" data-de="Beides">Both</span></label>
+              <label class="seg-opt"><input type="radio" name="view" value="preview"><span data-en="Preview" data-zh="预览" data-de="Vorschau">Preview</span></label>
+            </div>
+          </div>
+          <div class="panes" id="panes">
+            <textarea class="body-input" id="f-body" data-ph="body" data-tip="body"></textarea>
+            <div class="preview" id="preview"></div>
+          </div>
+          <input type="file" id="image-file" accept="image/*" hidden>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-ghost danger" type="button" id="btn-delete"><span data-en="Delete" data-zh="删除" data-de="Löschen">Delete</span></button>
+          <span class="actions-gap"></span>
+          <button class="btn btn-secondary" type="button" id="btn-draft"></button>
+          <button class="btn btn-primary" type="button" id="btn-publish"></button>
+        </div>
+        <p class="fine" data-en="Drafts don't appear on the site, but their text can be read in your public GitHub repository. Changes you haven't saved are kept in this browser until you do." data-zh="草稿不会出现在网站上，但它的文字可以在你公开的 GitHub 仓库里看到。尚未保存的修改会先留在这个浏览器里，直到你保存。" data-de="Entwürfe erscheinen nicht auf der Website, ihr Text ist aber in deinem öffentlichen GitHub-Repository lesbar. Nicht gespeicherte Änderungen bleiben in diesem Browser, bis du speicherst.">Drafts don't appear on the site, but their text can be read in your public GitHub repository. Changes you haven't saved are kept in this browser until you do.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dialog class="desk-dialog" id="dialog" aria-labelledby="dialog-title">
+  <h2 id="dialog-title"></h2>
+  <p id="dialog-body"></p>
+  <div class="dialog-actions">
+    <button class="btn btn-secondary" type="button" id="dialog-cancel"></button>
+    <button class="btn btn-primary" type="button" id="dialog-ok"></button>
+  </div>
+</dialog>
+
+<script src="assets/site.js"></script>
+<script src="assets/interactions.js" defer></script>
+<script src="assets/notes-build.js"></script>
+<script src="assets/write.js"></script>
+</body>
+</html>

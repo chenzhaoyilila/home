@@ -25,6 +25,10 @@ Front matter (between --- fences at the top of the file):
 
 Markdown: blank line = new paragraph, single newline = line break.
 Stdlib only — no pip install, no venv activation needed.
+
+The writing desk (write.html) rebuilds posts.json in the browser with
+assets/notes-build.js, a line-for-line port of this script. Change one,
+change the other.
 """
 
 import datetime

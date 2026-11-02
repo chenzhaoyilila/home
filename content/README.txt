@@ -9,7 +9,45 @@ site reads. Drafts stay on your machine until you say so.
 
 
 ----------------------------------------------------------------
-THE LOOP — 日常流程
+ON THE WEBSITE — 在网站上写（最简单）
+----------------------------------------------------------------
+
+Open  https://chenzhaoyilila.github.io/home/write.html
+
+The first time, the page asks for a GitHub key from your account and walks
+you through making one (only the home repository, Contents: Read and
+write). The key stays in that browser. Then:
+第一次使用时，页面会请你提供一个 GitHub 密钥，并一步步带你创建（只需 home
+仓库的 Contents: Read and write 权限）。密钥只保存在那个浏览器里。之后：
+
+  New note / Edit      write in Markdown, with a live preview
+  Save draft           kept on GitHub, NOT on the site (its text can still be
+                       read in the public repository)
+  Publish / Update     on the site about a minute later
+  Unpublish / Delete   takes it off the site again
+  Image button         pick a photo; it is resized and saved with the note
+
+  新随笔 / 编辑         用 Markdown 写，旁边实时预览
+  保存草稿              存在 GitHub 上，不上网站（但公开仓库里能看到原文）
+  发布 / 更新           大约一分钟后出现在网站上
+  取消发布 / 删除       从网站上撤下
+  图片按钮              选一张照片，自动缩小，随随笔一起保存
+
+In the connected browser, Notes shows a "New note" button and each note an
+"Edit" button. Nobody else sees them, and without your key nobody else can
+save anything.
+在已连接的浏览器里，随笔页会出现“新随笔”按钮，每篇文章有“编辑”按钮。
+别人看不到这些按钮；没有你的密钥，别人也无法保存任何内容。
+
+Each save is one commit on GitHub that already includes the rebuilt
+posts.json, so there is nothing to run. Before you next write on this
+computer, run  git pull  to bring those commits here.
+每次保存都是 GitHub 上的一次提交，已经包含重新生成的 posts.json，无需运行任何
+命令。之后要在这台电脑上写之前，先运行 git pull 把这些提交同步下来。
+
+
+----------------------------------------------------------------
+ON THIS COMPUTER — 在电脑上写
 ----------------------------------------------------------------
 
 1. WRITE — 写
